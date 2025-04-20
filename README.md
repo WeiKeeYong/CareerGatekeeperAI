@@ -42,3 +42,14 @@ To set up and run Career Gatekeeper AI, you need:
 5. **Basic Technical Knowledge**:
    - Familiarity with JSON, webhooks, API integration, and XML editing.
    - Basic understanding of Airtable for data storage.
+
+## Intallation
+1. Import n8n Workflow:
+2. Open n8n and go to Workflows > New.
+3. Download Job4MeSim.json from this repository.
+4. Import Job4MeSim.json into n8n.
+5. Configure credentials in the workflow:
+- Telegram: Add your bot’s API key and set the webhook URL.
+- OpenAI: Add your API key.
+- Airtable: Add your API key and Agent Memory base ID.
+6. Update the prompt in ai agent to suite your jobs description. 
