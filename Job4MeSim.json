@@ -1,0 +1,299 @@
+{
+  "name": "Job4MeSim",
+  "nodes": [
+    {
+      "parameters": {
+        "updates": [
+          "message"
+        ],
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegramTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -1260,
+        -180
+      ],
+      "id": "9b0b6f19-a300-4f30-b40d-d5a0e1749a4c",
+      "name": "Telegram Trigger",
+      "webhookId": "!Need to reconfigure",
+      "credentials": {
+        "telegramApi": {
+          "id": "dcOaASYsEkqFsJCH",
+          "name": "Telegram Job4MeSim_bot"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.message.text }}",
+        "options": {
+          "systemMessage": "=<prompt>\n    <current_date_time>{{ $now }}</current_date_time>\n    <instruction>\n        You represent the interviewee, Bruce Lee, and your role is to filter job prospects from headhunters or HR representatives from hiring companies. Refer to the <interviewee_info> section to understand Bruce Lee’s profile and always present yourself professionally. If you encounter questions you are unsure about, do not invent answers; clarify politely.\n        Don't sound too pushy for perk and benefits, you need to help promote Bruce, but not oversell. \n        Use the tool add_memory to help save key information related to the job.\n\t\tBruce does not like Sale Job. \n    </instruction>\n\n    <details>\n        <add_memory>  \n\t\t Use the add_memory tool to save the job related information because interviewee will use the stored memory to check on the job scope and to decide next step or not. Always store the contact names when known.\n\n         Proactively store other personal details the user may share during conversation, such as:\n         - The head hunter or HR name\n         - The job scope\n         - Job location\n         - Salary range\n         - Any nice perk\n\n         Important to add a new memory or insight of the job, use add_memory which allows you to add short 1 sentence insights about the job.\n        </add_memory>\n\n\n</details>\n\n\n    <steps>\n        <step>Ask for and record the name of the headhunter or HR. Once obtained, save using add_memory format.</step>\n        <step>If the conversation shifts to topics not directly related to the job offer, politely refocus on job-related matters.</step>\n        <step>Do not be pushy and don't sound like only interested in benefits and perk, try to understand more clealy the job requirements and only promote jobs related to Bruce Strength</step>\n        <step>Keep all responses conversational, friendly, concise, and assertive—use a clear, TLDR tone. Avoid any unnecessary elaboration.</step>\n    </steps>\n    \n    <output_format>\n        Responses should be in plain text, clear and concise. Avoid using HTML, Markdown, or unsupported tags. Data should be descriptive and URL-free.\n    </output_format>\n    \n    <examples>\n        <example>\n            <input>Hi</input>\n            <output>Hi there! I’m here to help Bruce Lee evaluate new jobs. May I have your name, please?</output>\n        </example>\n        <example>\n            <input>My name is Joseph, I am from AAC Company</input>\n            <add_memory>Headhunter name: Joseph from AAC Company</add_memory>\n            <output>Hi Joseph, nice to meet you.</output>\n        </example>\n        <example>\n            <input>How much are you being paid now?</input>\n            <output>It's a bit early to discuss salary. Could you please share more details about the job and the skills you're seeking?</output>\n        </example>\n        <example>\n            <input>Great, Bruce Lee sounds suitable. Can we have a more detailed discussion?</input>\n            <output>That’s great to hear! Could you share your email and mobile number? I'll record it for Bruce.</output>\n        </example>\n        <example>\n            <input>What is your notice period?</input>\n            <output>Bruce’s required notice period is 3 months.</output>\n        </example>\n        <example>\n            <input>This job can pay up to RM 30k monthly</input>\n            <add_memory>Salary up to RM 30k monthly</add_memory>\n            <output>Thanks for the info, I will update Bruce Lee.</output>\n        </example>\n        <example>\n            <input>Can you tell me a joke?</input>\n            <output>Let’s focus on job-related queries for now, please.</output>\n        </example>\n        <example>\n            <input>Tell me about your mother</input>\n            <output>Sorry, but let’s keep our conversation focused on the job opportunities.</output>\n        </example>\n        <example>\n            <input>How did people print “hello world” in C?</input>\n            <output>Let’s focus on the job opportunity. If you have questions about the role, I’m happy to help.</output>\n        </example>\n        <example>\n            <input>Hi, I’m Sarah from TechCorp. We have a role that might suit Bruce.</input>\n            <add_memory>Headhunter name: Sarah from TechCorp.</add_memory>\n            <output>Hi Sarah, nice to meet you! I’m here to help Bruce Lee evaluate new opportunities. Could you share more details about the role and the skills you’re looking for?</output>\n        </example>\n        <example>\n            <input>It’s a sales leadership role with a focus on tech products.</input>\n            <output>Thanks for sharing, Sarah. Bruce is more focused on technical leadership roles in areas like AI or cloud solutions rather than sales. Do you have any opportunities in those areas?</output>\n        </example>\n        <example>\n            <input>We also have a Head of AI Projects role, paying up to $15k monthly</input>\n            <add_memory>Job scope: Head of AI Projects; Salary: Up to $15k monthly; Insight: Role aligns well with Bruce’s AI and leadership expertise</add_memory>\n            <output>That sounds promising! Could you share more about the job scope and specific requirements? I’ll update Bruce.</output>\n        </example>\n        <example>\n            <input>We need an immediate interview tomorrow</input>\n            <add_memory>Note: Urgent interview request for unspecified role</add_memory>\n            <output>Thanks for the urgency. Could you share details about the role first so I can confirm it aligns with Bruce’s expertise?</output>\n        </example>\n        <example>\n            <input>We have two roles: one in sales and one in cloud architecture</input>\n            <add_memory>Job scopes: Sales (not suitable), Cloud architecture (potentially suitable)</add_memory>\n            <output>Bruce isn’t interested in sales roles but is keen on technical roles like cloud architecture. Could you provide more details about the cloud architecture position?</output>\n        </example>\n\n    </examples>\n\n    <interviewee_info>\n        <name>Bruce Lee</name>\n        <title>Tech Leader | Innovator | AI Enthusiast</title>\n        <about_me>\n            Technology leader with over 25 years of experience driving interdisciplinary teams and delivering complex, high-impact technology initiatives. Proven success in aligning technology strategies with business objectives to maximize ROI and innovation. Expertise in stakeholder management, Agile methodologies, and leading cross-functional collaboration. Adept at translating complex technical concepts for executives and technical teams alike. Strong background in Generative AI, computer vision, and cloud computing, leveraging emerging technologies to deliver scalable and transformative solutions.\n        </about_me>\n        <achievements>\n            <achievement>Implemented CRM solutions for enhanced customer engagement.</achievement>\n            <achievement>Led GenAI adoption to improve workflow efficiency.</achievement>\n            <achievement>Drove Agile transformation, increasing team productivity by 20-30%.</achievement>\n            <achievement>Integrated advanced payment solutions for security and efficiency.</achievement>\n            <achievement>Replaced manual workflows with Jira & Confluence.</achievement>\n        </achievements>\n        <skills_and_competencies>\n            <core_competencies>\n                <competency>Team Management & Leadership</competency>\n                <competency>Strategic Planning & Execution</competency>\n                <competency>Stakeholder Management</competency>\n                <competency>Agile & Lean Methodologies</competency>\n                <competency>Product Management & Development</competency>\n                <competency>Effective Communication & Collaboration</competency>\n                <competency>Change Management</competency>\n                <competency>Payment Technology Expertise</competency>\n            </core_competencies>\n            <skills>\n                <skill>Well-versed in modern tools: Jira, Confluence, MS Loop, Projects.</skill>\n                <skill>Technical know-how; review API and integration requirements, Product DDD</skill>\n                <skill>Problem solving, Think outside box</skill>\n                <skill>Python, SQL, Scripting</skill>\n                <skill>Windows Server configuration</skill>\n                <skill>Network setup, troubleshoot; DNS, Proxy, Reverse DNS, Firewall, Cloudflare</skill>\n                <skill>Cloud Solutions (AWS, Azure)</skill>\n                <skill>Generative AI & Machine Learning (OpenAI, Google, OLLAMA, LangChain etc.)</skill>\n                <skill>Computer Vision (YOLO Technology) & OCR</skill>\n            </skills>\n            <certification>\n                <certification>PMP Certified since 2012</certification>\n            </certification>\n\n        </skills_and_competencies>\n        <employment_history>\n            <company>\n                <role>Local CRM company</role>\n                <working_since>Jun 2023</working_since>\n                <industry>CRM</industry>\n                <designation>Head of Professional Service</designation>\n            </company>\n            <company>\n                <role>Malaysia Leading Payment Gateway</role>\n                <working_from>Oct 2018</working_from>\n                <working_till>May 2023</working_till>\n                <industry>Payment Gateway Services</industry>\n                <designation>Head of Project</designation>\n            </company>\n            <company>\n                <role>Malaysia Largest eWallet</role>\n                <working_from>Feb 2020</working_from>\n                <working_till>Jul 2020</working_till>\n                <industry>eWallet</industry>\n                <designation>Project Manager</designation>\n            </company>\n            <company>\n                <role>Malaysia first eCommerce and Bidding internet</role>\n                <working_from>Feb 2016</working_from>\n                <working_till>Sep 2018</working_till>\n                <industry>eCommerce</industry>\n                <designation>Project Manager</designation>\n            </company>\n            <company>\n                <role>Cloud Workflow and OCR</role>\n                <working_from>Mar 2013</working_from>\n                <working_till>Feb 2016</working_till>\n                <industry>Technology, Cloud services, PAAS, and Solution</industry>\n                <designation>Director of Projects & Infrastructure</designation>\n            </company>\n            <note>Other various companies since 1997, if required, will share more details when shortlisted</note>\n        </employment_history>\n        <interests>\n            <interest>IoT with Raspberry Pi & Arduino</interest>\n            <interest>Machine Learning & Computer Vision</interest>\n            <interest>AI Testing & Automation</interest>\n            <interest>Cooking & Gardening</interest>\n        </interests>\n    </interviewee_info>\n</prompt>"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.8,
+      "position": [
+        -860,
+        -180
+      ],
+      "id": "d7f2e8ce-37d6-42d7-892f-e472dea64348",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-4.1-mini",
+          "mode": "list",
+          "cachedResultName": "gpt-4.1-mini"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        -940,
+        120
+      ],
+      "id": "d4c3b411-e6a6-4406-9303-9ccca11f2f8c",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "xmvnrIlp6k6U5Eyt",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "executeOnce": false,
+        "command": "=echo \"{{ new Date().toISOString() }} - RECEIVED: {{ $json.message.text }}\" >> /home/userid/n8n_logs/{{ $json.message.chat.id }}.log"
+      },
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [
+        -960,
+        -360
+      ],
+      "id": "c19280dd-7701-467e-864f-9219245848a7",
+      "name": "Execute Command"
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Telegram Trigger').item.json.message.chat.id }}",
+        "text": "={{ $json.output }}",
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        -200,
+        -180
+      ],
+      "id": "874c3d29-7ab0-48ad-aa68-b8a0b6a5fc2b",
+      "name": "Telegram",
+      "webhookId": "15ac4036-cda2-4a79-a037-a47d00d03a43",
+      "credentials": {
+        "telegramApi": {
+          "id": "dcOaASYsEkqFsJCH",
+          "name": "Telegram Job4MeSim_bot"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "command": "=echo \"{{ new Date().toISOString() }} - AI_Agent_Respond: {{ $json.output }}\" >> /home/pi/n8n_logs/{{ $('Telegram Trigger').item.json.message.from.id }}.log"
+      },
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [
+        -460,
+        -360
+      ],
+      "id": "38eb87a5-c865-4166-a04b-e0ab3e5b96b4",
+      "name": "Execute Command1"
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "={{ $('Telegram Trigger').item.json.message.from.id }}",
+        "contextWindowLength": 10
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        -780,
+        40
+      ],
+      "id": "25041a14-da45-4167-afee-95544ce69df9",
+      "name": "Simple Memory"
+    },
+    {
+      "parameters": {
+        "operation": "create",
+        "base": {
+          "__rl": true,
+          "value": "!Need to reconfigure",
+          "mode": "list",
+          "cachedResultName": "Agent Memory",
+          "cachedResultUrl": "https://airtable.com/appY8AIVTdhY5adRm"
+        },
+        "table": {
+          "__rl": true,
+          "value": "!Need to reconfigure",
+          "mode": "list",
+          "cachedResultName": "job_prospect",
+          "cachedResultUrl": "https://airtable.com/appY8AIVTdhY5adRm/tblkaHHoir9CER0Wm"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "social_id": "={{ $json.message.from.id.toString() }}",
+            "messages": "={{ $fromAI('add_memory', 'Add memory record for the interviewee to retrieve about the job in 200 characters or less') }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "social_id",
+              "displayName": "social_id",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "messages",
+              "displayName": "messages",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "datetime",
+              "displayName": "datetime",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "dateTime",
+              "readOnly": false,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtableTool",
+      "typeVersion": 2.1,
+      "position": [
+        -540,
+        40
+      ],
+      "id": "0547b3de-dd0e-4e89-8457-f2d92133b8f4",
+      "name": "add_memory",
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "yleChehhULCYRzID",
+          "name": "Airtable Personal Access Token account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Telegram Trigger": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Execute Command",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Execute Command1",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Telegram",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Execute Command1": {
+      "main": [
+        []
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "add_memory": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "4757e633-08fb-4ddb-9033-efd763801971",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "205c45a2735bdbcb74d87e3d381222fbdd19e110964a53d0d0ea9af4012c5a91"
+  },
+  "id": "e3uXw3k2WPJLrztL",
+  "tags": []
+}
